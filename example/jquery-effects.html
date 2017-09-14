@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>jquery effects</title>
+    <script type="text/javascript" src="../plugins/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#show').click(function() {
+                // $('.p1-id').show(1000);
+                $('.p1-id').show(1000, function() {
+                    console.log('after 1000 ms its show');
+                })
+            })
+
+            $('#hide').click(function() {
+                // $('.p1-id').hide(1000);
+                $('.p1-id').hide(1000, function() {
+                    console.log('after 1000 ms its hide')
+                })
+            })
+
+            $('#button1-id').click(function() {
+                // $('#div1-id').animate({height: '200px',width: '200px'},2000)
+                $('#div1-id').animate({
+                    height: '200px',
+                    width: '200px'
+                }, {
+                    duration: 1000,
+                    easing: 'swing', //linear
+                    step: function(now, fx) {
+                        console.log('each step call', now, '==', fx);
+                    },
+                    complete: function() {
+                        $(this).after('<p> hi this tag maded after complete animate</p>');
+                    }
+                })
+            });
+
+            $('#button2-id').click(function() {
+                $('#div1-id').animate({
+                        height: '100px',
+                        width: '100px'
+                    }, 'fast', function() {
+                        console.log('animate called..');
+                    }) //style, 'slow,fast'
+            });
+
+            $('#in-progress-button').click(function() {
+                $('#in-progress-bar').animate({
+                    width: '400px'
+                }, {
+                    duration: 4000,
+                    start: function() {
+                        console.log('time start');
+                    },
+                    // step: function(x){
+                    // 	console.log(x)
+                    // 	$('#in-progress-number').text(Math.round(x * 100 / 400)  + "%")
+                    // },
+                    progress: function(x, f) {
+                        //console.log('x',x,'f',f)
+                        $('#in-progress-number').text(Math.round(f * 100) + "%")
+                    },
+                    done: function() {
+                        console.log('done');
+                    },
+                    fail: function() {
+                        console.log('if progress fail');
+                    }, // - specifies a function to be executed if the animation fails to complete
+                    always: function() {
+                            console.log('withour complete function');
+                        } // - specifies a function to be executed if the animation stops without completing
+                })
+            });
+            $('#stop-id').click(function() {
+                $('#in-progress-bar').stop(function() {
+                    console.log('in progress bar stoped');
+                })
+            })
+
+            $('#scroll-button').click(function() {
+                $('#scroll-div').animate({
+                    scrollTop: 0
+                }, 500)
+            })
+
+            $('#fad-in').click(function() {
+                // $('#div-fadin1').css('display','inline-grid')
+                // $('#div-fadin2').css('display','inline-grid')
+                // $('#div-fadin3').css('display','inline-grid')
+                $('#div-fadin1').fadeIn();
+                $('#div-fadin2').fadeIn('slow');
+                $('#div-fadin3').fadeIn(4000);
+            });
+
+            $('#button-fadeToggle').click(function() {
+                $('#div-fadeToggle1').fadeToggle(function() {
+                    console.log('fade toggle 1');
+                });
+                $('#div-fadeToggle2').fadeToggle('slow', function() {
+                    console.log('fade toggle 2');
+                });
+                $('#div-fadeToggle3').fadeToggle(3000, function() {
+                    console.log('fade toggle 3');
+                });
+            })
+            $('#button-fadeout').click(function() {
+                $('#div-fadeout1').fadeOut('fast', function() {
+                    console.log('fade out 1');
+                });
+                $('#div-fadeout2').fadeOut('slow', function() {
+                    console.log('fade out 2');
+                });
+                $('#div-fadeout3').fadeOut(3000, function() {
+                    console.log('fade out 3');
+                });
+            })
+
+            $('#button-fadeTo').click(function() {
+                $('#div-fadeTo1').fadeTo(1000, 0.1, function() {
+                    console.log('fade to 1');
+                });
+                $('#div-fadeTo2').fadeTo(2000, 0.5, function() {
+                    console.log('fade to 2');
+                });
+                $('#div-fadeTo3').fadeTo(3000, 0.7, function() {
+                    console.log('fade to 3');
+                });
+            })
+
+            $('#button-slide-down').click(function() {
+                $('#div-slide-down').slideDown('slow', function() {
+                    console.log('slide down is over');
+                })
+            })
+            $('#button-slide-up').click(function() {
+                $('#div-slide-up').slideUp('slow', function() {
+                    console.log('slide up is over');
+                })
+            })
+            $('#button-slide-toggle').click(function() {
+                $('#div-slide-toggle').slideToggle('slow', function() {
+                    console.log('slide toggle is over');
+                })
+            })
+
+            $('#button-chaining').click(function() {
+                $('#div-chaining').css('color', 'yellow').slideUp(2000).slideDown(1000);
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <p class="p1-id">hi this is p tag</p>
+    <button id="show">show</button>
+    <button id="hide">hide</button>
+    <hr>
+    <button id="button1-id">animate open</button>
+    <button id="button2-id">animate close</button>
+    <div id="div1-id" style="width: 100px;height: 100px;background-color: green;"></div>
+    <hr>
+    <div id="progress-bar" style="border:solid 1px; width: 400px; height:50px;">
+        <div id="in-progress-bar" style="width: 1px; height: 50px;background-color: green;"></div>
+    </div>
+    <p id='in-progress-number'></p>
+    <button id="in-progress-button">in progress button</button>
+    <button id="stop-id">stop progress bar</button>
+    <hr>
+    <div id="scroll-div" style="overflow-y: scroll; width:100px; border: 1px solid; height: 200px;">
+        <p>this is p tag 1</p>
+        <p>this is p tag 1</p>
+        <p>this is p tag 2</p>
+        <p>this is p tag 3</p>
+        <p>this is p tag 4</p>
+        <p>this is p tag 5</p>
+        <p>this is p tag 6</p>
+        <p>this is p tag 7</p>
+        <p>this is p tag 8</p>
+    </div>
+    <button id="scroll-button">click</button>
+    <hr>
+    <button id="fad-in">fad-in</button>
+    <div id="div-fadin1" style="width: 50px;height: 50px;display: none; background-color: red;"></div>
+    <div id="div-fadin2" style="width: 50px;height: 50px;display: none; background-color: green;"></div>
+    <div id="div-fadin3" style="width: 50px;height: 50px;display: none; background-color: gray;"></div>
+    <hr>
+    <button id="button-fadeToggle">fad-toggle</button>
+    <div id="div-fadeToggle1" style="width: 50px;height: 50px;display: none; background-color: red;"></div>
+    <div id="div-fadeToggle2" style="width: 50px;height: 50px;display: none; background-color: green;"></div>
+    <div id="div-fadeToggle3" style="width: 50px;height: 50px;display: none; background-color: gray;"></div>
+    <hr>
+    <button id="button-fadeout">fad-out</button>
+    <div id="div-fadeout1" style="width: 50px;height: 50px; background-color: red;"></div>
+    <div id="div-fadeout2" style="width: 50px;height: 50px; background-color: green;"></div>
+    <div id="div-fadeout3" style="width: 50px;height: 50px; background-color: gray;"></div>
+    <hr>
+    <button id="button-fadeTo">fad-to</button>
+    <div id="div-fadeTo1" style="width: 50px;height: 50px; background-color: red;"></div>
+    <div id="div-fadeTo2" style="width: 50px;height: 50px; background-color: green;"></div>
+    <div id="div-fadeTo3" style="width: 50px;height: 50px; background-color: gray;"></div>
+    <hr>slide down
+    <button id="button-slide-down">slide down</button>
+    <div id="div-slide-down" style="width: 200px;height: 50px;display: none; background-color: red;">
+        hi this is slide down
+    </div>
+    <hr>slide up
+    <button id="button-slide-up">slide up</button>
+    <div id="div-slide-up" style="width: 200px;height: 50px; background-color: red;">
+        hi this is slide up
+    </div>
+    <hr>slide toggle
+    <button id="button-slide-toggle">slide toggle</button>
+    <div id="div-slide-toggle" style="width: 200px;height: 50px; background-color: red;">
+        hi this is slide toggle
+    </div>
+
+    <hr>jquery chaining
+    <button id="button-chaining">slide chaining</button>
+    <div id="div-chaining" style="width: 200px;height: 50px; background-color: red;">
+        hi this is chaining
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jquery-events</title>
+	<style>
+		.intro {
+		    font-size: 150%;
+		    color: red;
+		}
+	</style>
+	<script type="text/javascript" src="../plugins/jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('input').blur(function(){
+				console.log('on blur event call');
+			})
+			$('select').change(function(e){
+				e.currentTarget[0].value='kinkar';
+				console.log('on change event ',e);
+				console.log('on change event call',e.currentTarget[0].value);
+				console.log('on change event call this',$(this)[0][0]);
+				$(this)[0][0].value='prem'
+				console.log('on change event call by this',$(this)[0][0].value);
+			})
+			$('p').click(function(e,a){
+				console.log('click event call',e);
+			})
+			$('#div-id').dblclick(function(e){
+				console.log('dblclick event called',e);
+				console.log('namespace',e.namespace)
+				console.log('pageX',e.pageX)
+				console.log('namespace',e.namespace)
+			});
+
+			$('p').each(function(i){
+				//loding time p loop execute after that click on p on click will fire
+				console.log('i',i);
+				$(this).on('click',{x:i},function(event){
+					console.log('event.data: ',event.data.x);
+				})
+			})
+			$('#div-id').mouseover(function(e){
+				 // $(e.relatedTarget).css('background-color','yellow');
+				//console.log('event relatedTarget: ',e.relatedTarget);
+				// $(event.currentTarget).css('background-color','white');
+			})
+			
+			$('p').mouseleave(function(event){
+				//$(event.currentTarget).css('background-color','green');
+			})
+
+			$('p').mouseenter(function(event){
+				// $(event.currentTarget).css('background-color','yellow');
+				// console.log('event mouseenter: ',event.relatedTarget);
+				// console.log('event mouse enter currrentTarget',event.currentTarget)
+				// console.log('event mouse enter delegateTarget',event.delegateTarget)
+			})
+				/*mousedown()	Attaches/Triggers the mousedown event
+				mouseenter()	Attaches/Triggers the mouseenter event
+				mouseleave()	Attaches/Triggers the mouseleave event
+				mousemove()	Attaches/Triggers the mousemove event
+				mouseout()	Attaches/Triggers the mouseout event
+				mouseover()	Attaches/Triggers the mouseover event
+				mouseup()	Attaches/Triggers the mouseup event*/
+				//========================================================
+				//$(selector).on(event,childSelector,data,function,map)
+				//Attach multiple events===================
+				$('div').on('mouseenter mouseout','p',{intro: 'intro'},function(event){
+					 //$(this).toggleClass(event.data.intro);
+				})
+
+				// $('div').on('click','button',function(){
+				// 	$(this).css('background-color','yellow');
+				// })
+
+				 $("div").on("click", "button", function(event){
+			        console.log("delegateTarget returns: " + event.delegateTarget.nodeName +
+			        "\ncurrentTarget returns: " + event.currentTarget.nodeName);
+			    });
+				 //==================Attach multiple event handlers using the map parameter===
+				 $('p').on({
+				 	mouseenter:function(e){
+				 		$('body').css('background-color',"lightgray")
+				 	},
+				 	mouseout: function(e){
+				 		$('body').css('background-color',"lightblue")
+				 	},
+				 	click: function(e){
+				 		$('body').css('background-color',"lightpink")
+				 	}
+				 })
+				 //Attach a custom event on an element
+
+				 $('#my-div p').on('my-event',function(event,name){
+				 	$(this).text(name+' wao what a beautifull name').show();
+				 })
+
+				 $('#my-div button').on('click',function(){
+				 	$('#my-div p').trigger('my-event','kinkar');
+				 })
+
+				 //Pass along data to the function
+				function eventFun(event){
+				 	console.log('event.data.msg',event.data.msg);
+				}
+				$('#my-button').on('click',{msg: 'this is my message to all'}, eventFun);
+
+				 //Add event handlers for future elements 
+				$('#my-button').on('click',function(){
+				 	$('#inner-id').slideToggle();
+				 	$('<p>hi new p is inserted</p>').insertAfter('#my-div');
+				});
+
+				$('#my-button').click(function(event){
+					console.log('event.type',event.type)//which type of event
+					console.log('event.which',event.which)//which button press or over by mouse of keyboard
+					console.log('event.timeStamp',event.timeStamp);
+					$('p').off('click mouseout mouseenter');//can off multiple event
+				});
+				$('.first-input').focus(function(){
+					$('.content-div').css('background-color','lightgray');
+				})
+
+				$('.first-input').on('focusin focusout',function(){
+					$('.content-div').css('background-color','blue');	
+				})
+
+				$('.content-div').hover(function(){
+					$('.content-div').css('background-color','pink');	
+				})
+
+				$('.keypress').keypress(function(event){
+					console.log('key is pressed',event);
+					console.log('key is pressed',event.originalEvent.key);
+				})
+
+				$('#a-id').one('click',function(e){
+					$(this).animate({fontSize:"+=6px"});
+				})
+				
+				var x = 0;
+				$('.main-div').scroll(function(){
+					console.log('scroll',x+=1);
+				})
+
+				$("form").submit(function(){
+			        alert("Submitted");
+			    });
+
+			    //====================================
+			    $("input").select(function(){
+			        $("input").after(" Text marked!");
+			    });
+			    $("button").click(function(){
+			        $("input").trigger("select");
+			    });
+		})
+	</script>
+</head>
+<body>
+<form action="">
+  First name: <input type="text" name="FirstName" value="Mickey"><br>
+  Last name: <input type="text" name="LastName" value="Mouse"><br>
+  <input type="submit" value="Submit">
+</form> 
+<div class="main-div" style="border:1px solid black;width:200px;height:100px;overflow:scroll;">In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since.
+<br><br>
+'Whenever you feel like criticizing anyone,' he told me, just remember that all the people in this world haven't had the advantages that you've had.'
+</div>
+<p id="a-id">animated event and one function</p>
+<input type="text" name="keypress" class="keypress">
+<div class="content-div" style="width: 100px; height: 100px; border: solid 2px;">
+	<input type="text" name="name" class="first-input">
+</div>
+<button id="my-button">click me</button>
+<div id="my-div">
+	<button>change p text</button>
+	<p id="inner-id">i am p tag in my-div</p>
+</div>
+
+<div id="div-id" class="div-id" style="width: 200px;height: 200px; border: solid 2px; ">
+i am div
+<p>iam inner p of div</p>
+<button>inner button</button>
+<button>inner button 1</button>
+</div>
+
+<p>im p tag</p>
+<input type="text" name="name">
+<select>
+<option>kinkar</option>
+<option>jay</option>
+<option>som</option>
+</select>
+</body>
+</html>

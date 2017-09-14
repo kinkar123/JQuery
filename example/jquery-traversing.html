@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JQuery Traversing</title>
+	<script type="text/javascript" src="../plugins/jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+	var j=jQuery;
+		j(function(){
+			console.log('hi this is jQuery');
+			console.log('parent of ul tag',j('ul').parent());
+			j('ul').parent().css({border: 'solid 1px red'})
+			console.log('parents of li tag',j('li').parents());
+			j('li').parents().css({border: 'solid 1px blue'});
+			
+			
+		});
+	</script>
+</head>
+<body>
+<div>
+	<ul>
+		<li>this is li 1</li>
+		<li>this is li 2</li>
+		<li>this is li 3</li>
+		<li>this is li 4</li>
+		<li>this is li 5</li>
+		<li><span>this is <b>li 6</b></span></li>
+	</ul>
+</div>
+</body>
+</html>

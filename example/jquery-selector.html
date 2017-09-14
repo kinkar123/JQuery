@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jquery 1</title>
+	<script type="text/javascript" src="../plugins/jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		console.log('Jquery this',$(this)[0])//document object
+		/*$('p').hide();
+		$('.div-content-class').hide();*/
+			
+	})
+	$(function(){//same as ready function
+   		// jQuery methods go here...
+   		/*$(':button').click(function(){
+   			$(this).hide();
+   		})
+   		$('button').click(function(){
+   			$(this).hide();
+   		})
+   		$('.div-content-class').click(function(){
+   			$(this).hide();
+   		});*/
+   		//=====href=================================
+   		$('[href]').click(function(){
+   			console.log('href:',$(this));
+   		});
+   		$("a[target='_blank']").click(function(){
+   			console.log('by target blank:',$(this));
+   		});
+   		$("a[target!='_blank']").click(function(){
+   			console.log('by target not blank:',$(this));
+   		});
+   		//=============first========================
+   		$('ul li:first').css('color','red');
+   		$('ul li:nth-child(3)').css('color','blue');//any child node can get
+   		//==========================================
+   		/*$('*').click(function(){//all element
+   			console.log('all element1',this);
+   		})
+
+   		$('* body').click(function(){//all in body
+   			console.log('all element2',this);
+   		})
+   		$('* body button').click(function(){//all in body
+   			console.log('all element3',this);
+   		})*/
+   		//========================================
+   		$('button,div,p').click(function(){
+   			console.log('random call: ',$(this));
+   		})
+   		$('ul > li:first').click(function(){
+   			console.log('first li is click');
+   		})
+   		$('div ul li:nth-child(3)').click(function(){
+   			console.log('third li is click');
+   		})
+   		$('div + p').css("background-color", "red");//it will apply to all siblings
+   		//$('div ~ p').css("background-color", "yellow");
+   		//==============================================
+   		$('table tbody tr:odd').css('background-color','#ecebeb');
+   		$('table tbody tr:eq(2)').css('color','red');
+   		$('table tbody tr:gt(3)').css('color','blue');
+   		$('table tbody tr:lt(2)').css('color','pink')
+   		$(':header').css('color','red');
+   		$('input').focus();
+   		$(':focus').css('background-color','green');
+   		$('div:contains(first)').css('background-color','blue');
+   		$('div:has(p)').css('background-color','gray');
+   		$('#p-id:parent').css('background-color','purple')
+   		$('#button-id:disabled').css('background-color','yellow');
+   		$(':selected').css('background-color','green');
+	});
+	</script>
+</head>
+<body>
+<input type="button" name="click" id="button-id" disabled="disabled" value="disabled button">
+<h1>Jquer</h1>
+<h6>jquery h6</h6>
+<div>first div</div>
+<select>
+	<option>kinkar</option>
+	<option selected="selected">sarkar</option>
+</select>
+<p >Hi im p tag inside div1</p>
+<p>Hi im p tag inside div2</p>
+<p>Hi im p tag inside div3</p>
+<div>second div
+<p id="p-id">Hi im p tag inside second div1</p>
+<p>Hi im p tag inside second div2</p>
+<p>Hi im p tag inside second div3</p></div>
+
+<p>i am p tag</p>
+<input type="text" name="name">
+<div class="div-content-class">this is div class</div>
+<div id="div-content-id">this is div with id</div>
+<button>click</button>
+<button>yes</button>
+<button>onclike</button>
+<button>ok</button>
+<div>
+	<ul id='items'>
+		<li>kinkar</li>
+		<li>sarkar</li>
+		<li>joy</li>
+	</ul>
+</div>
+
+<a href="http://www.google.com" target="_blank">click</a>
+<a href="http://www.facebook.com">click</a>
+
+<table border="2%">
+	<thead>
+		<tr>
+			<th>name</th><th>age</th><th>class</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td>kinkar</td> <td>30</td> <td>MCA</td></tr>
+		<tr><td>kinkar</td> <td>30</td> <td>MCA</td></tr>
+		<tr><td>kinkar</td> <td>30</td> <td>MCA</td></tr>
+		<tr><td>kinkar</td> <td>30</td> <td>MCA</td></tr>
+		<tr><td>kinkar</td> <td>30</td> <td>MCA</td></tr>
+		<tr><td>kinkar</td> <td>30</td> <td>MCA</td></tr>
+		<tr><td>kinkar</td> <td>30</td> <td>MCA</td></tr>
+	</tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JQuery Html</title>
+	<script type="text/javascript" src='../plugins/jquery-3.2.1.js'></script>
+	<style type="text/css">
+		.blue{
+			color: blue;
+		}
+		#seventh-div{
+			border: 2px solid blue;
+			background-color: lightblue;
+			height: 100px;
+		    width: 300px;
+		    padding: 10px;
+		    margin: 3px;
+		}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			$('#first-button').click(function(){
+				$('#first-p').text('hi this is kinkar');
+				console.log('text(): ',$('p').text());
+				$('#first-input').val('Kinkar');
+				console.log('val()',$('input').val());
+				$('.first-div').html('<p>this is inner p of first-div</p>');
+				console.log('html()',$('div').html());
+				// $('.first-div').attr('id','first-div');
+				// console.log('attr(): ',$('#first-div').attr('id'));
+				$('.first-div').attr({'style':'width:50px','id': 'first-div'})
+				$('.first-img').attr('width',function(index,val){
+					console.log('img width: ',val);
+					return parseInt(val)+50;
+				});
+			});
+			$('.2-button').click(function(){
+				$('#2-p').text(function(index,originaText){
+					return originaText+'second p';
+				})
+				$('.2-img').attr('src',function(index,originaSrc){
+					return originaSrc+'IMG-20170107-WA0001.jpg';
+				})
+				$('.2-img').attr({width:100,height: 100});
+				$('.2-a').attr({href:'http://www.google.com',target:'_blank'});
+				$('.2-button').attr(cssFun());
+			});
+
+			$('#3-button').click(function(){
+				var p1='<p>this is p1</p>'
+				var p2='<p>this is p2</p>'
+				var p3='<p>this is p3</p>'
+				var text=document.createElement('p');
+				text.innerHTML='this is prepend fun';
+				$('.3-div').append(p1,p2,p3);
+				$('.3-div').prepend(text,p3);
+				var div=document.createElement('div');
+				div.className='4-div';
+				var p4='<p> this is p4 inside div after()';
+				var p5='<p> this is p5 inside div after()';
+				$("<span>Hello World appendTo!</span>").appendTo(".3-div");
+				$("<span>Hello World prependTo!</span>").prependTo(".3-div");
+				$('.3-div').after(div,p4);
+				$('.3-div').before(p5);
+
+			});
+
+			$('#5-button').click(function(){
+				//$('p').empty();//remove all p tag
+				//$('#5-p').empty(); //remove selected tag
+				$('p').remove('#5-p, #first-p');
+			})
+			$('#6-button').click(function(){
+				$('#6-div, #first-p').addClass('main-div md-6');
+			});
+			$('#6-button1').click(function(){
+				$('#6-div, #first-p').toggleClass('blue')
+			})
+			$('#6-button2').click(function(){
+				$('#6-div').removeClass('main-div')
+			})
+			$('#7-button').click(function(){
+				console.log('width: ',$('#seventh-div').width());
+				console.log('height: ',$('#seventh-div').height());
+				console.log('.innerWidth: ',$('#seventh-div').innerWidth());
+				console.log('innerHeight: ',$('#seventh-div').innerHeight());
+				console.log('outerWidth: ',$('#seventh-div').outerWidth());
+				console.log('outerHeight: ',$('#seventh-div').outerHeight());
+				var txt = "";
+			    txt += "Document width/height: " + $(document).width();
+			    txt += "x" + $(document).height() + "\n";
+			    txt += "Window width/height: " + $(window).width();
+			    txt += "x" + $(window).height();
+			    console.log('txt: ',txt);
+			     $("#seventh-div").width(200).height(200);
+			})
+
+			function cssFun(){
+					return {id: '2-button',style: 'width: 150px'}
+				}
+		})
+	</script>
+</head>
+<body>
+<button id="first-button">first button</button>
+<p id="first-p">Hi this is p tag</p>
+<input type="text" name="name" id="first-input">
+<div class="first-div"></div>
+<img class='first-img' src="../img/new-year.jpg" width="100" height="100">
+<hr>
+<p id="2-p">this is </p>
+<a class="2-a">google</a>
+<img class='2-img' src="../img/" width="100" height="100">
+<button class="2-button">get image</button>
+<hr>
+<div class="3-div"></div>
+<button id="3-button">3-button</button>
+<hr>
+<p id="5-p">this is 5-p remove</p>
+<button id='5-button'>5-button</button>
+<hr>
+<div id='6-div'>
+	<p>this is p tag in 6-div</p>
+</div>
+<button id="6-button">6-button</button>
+<button id="6-button1">6-button1</button>
+<button id="6-button2">6-button2</button>
+<hr>
+<div id="seventh-div"></div>
+<button id="7-button">7-button</button>
+</body>
+</html>
